@@ -41,7 +41,6 @@
 		outline:none;
 	}
 	
-	/* Style inputs with type="text", select elements and textareas */
 	input[type=text], select, textarea {
 	  width: 100%; /* Full width */
 	  padding: 12px; /* Some padding */ 
@@ -53,7 +52,6 @@
 	  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
 	}
 
-	/* Style the submit button with a specific background color etc */
 	input[type=submit] {
 	  background-color: #04AA6D;
 	  color: white;
@@ -63,12 +61,10 @@
 	  cursor: pointer;
 	}
 
-	/* When moving the mouse over the submit button, add a darker green color */
 	input[type=submit]:hover {
 	  background-color: #45a049;
 	}
 
-	/* Add a background color and some padding around the form */
 	.container {
 	  border-radius: 5px;
 	  background-color: white;
@@ -95,7 +91,7 @@
 		<input type="text" id="fname" name="name" placeholder="Your name..">
 
 		<label for="lname">Phone</label>
-		<input type="text" id="phone" name="number" placeholder="Your phone number..">
+		<input type="number" id="phone" name="number" placeholder="Your phone number..">
 
 		<label for="country">Drink</label>
 		<select id="drink" name="drink">
