@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	body 
+	{
+		background-color: black;
+	}
+	
+	#mydiv {
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	#textdiv {
+		width: 50%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.center { 
+		margin-left: auto;
+		margin-right: auto;
+		text-align:center;
+		align-content:center;
+	}
+	
+	.button {
+		width: 50%;
+		text-align: center;
+		font-family: calibri;
+		font-size: 16px;
+		background-color: Transparent;
+		border: 1px solid #ffffff;
+		background-repeat:no-repeat;
+		padding: 15px 32px;
+		cursor:pointer;
+		overflow: hidden;
+		margin: 4px 2px;
+		outline:none;
+	}
+	
+	/* Style inputs with type="text", select elements and textareas */
+	input[type=text], select, textarea {
+	  width: 100%; /* Full width */
+	  padding: 12px; /* Some padding */ 
+	  border: 1px solid #ccc; /* Gray border */
+	  border-radius: 4px; /* Rounded borders */
+	  box-sizing: border-box; /* Make sure that padding and width stays in place */
+	  margin-top: 6px; /* Add a top margin */
+	  margin-bottom: 16px; /* Bottom margin */
+	  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+	}
+
+	/* Style the submit button with a specific background color etc */
+	input[type=submit] {
+	  background-color: #04AA6D;
+	  color: white;
+	  padding: 12px 20px;
+	  border: none;
+	  border-radius: 4px;
+	  cursor: pointer;
+	}
+
+	/* When moving the mouse over the submit button, add a darker green color */
+	input[type=submit]:hover {
+	  background-color: #45a049;
+	}
+
+	/* Add a background color and some padding around the form */
+	.container {
+	  border-radius: 5px;
+	  background-color: white;
+	  padding: 20px;
+	}
+	
+</style>
+</head>
+<body>
+	<center>
+	<img src = "crosswalklogo.png" width="150" height="150" alt="" class="image"></img>
+	<h1 style="text-align: center; font-family: calibri; color: white">CROSSWALK TEAHOUSE</h1>
+	<div id="textdiv">
+	<p style="text-align: center; font-family: calibri; color: white; font-size: 16px">Quick Order Form</p>
+	<p style="text-align: center; font-family: calibri; color: white; font-size: 14px">For questions regarding orders please reach out to us on Instagram. For multiple orders please include details under special instructions.</p>
+	</div>
+	</center>
+	
+	<div id="mydiv">
+	<div class="container">
+	  <form action="action_page.php">
+
+		<label for="fname">Name</label>
+		<input type="text" id="fname" name="name" placeholder="Your name..">
+
+		<label for="lname">Phone</label>
+		<input type="text" id="phone" name="number" placeholder="Your phone number..">
+
+		<label for="country">Drink</label>
+		<select id="drink" name="drink">
+		  <option value="tea">Thai Tea</option>
+		  <option value="peach">Peach Lemonade</option>
+		  <option value="lavander">Lavander Lemonade</option>
+		  <option value="coconut">Coconut and Watermelon Lemonade</option>
+		  <option value="coffee">Iced Coffee</option>
+		</select>
+		
+		<label for="subject">Quantity</label>
+		<select id="drink" name="drink">
+		  <option value="tea">2 Quarts ($15)</option>
+		  <option value="peach">3 Quarts ($27)</option>
+		</select>
+
+		<label for="subject">Special Instructions</label>
+		<textarea id="subject" name="subject" placeholder="Include instructions and details" style="height:200px"></textarea>
+
+		<input type="submit" style="background-color: black" value="Submit">
+
+	  </form>
+	</div>
+	<script>
+	<?php
+	if (isset($_POST['Email'])) {
+
+		// EDIT THE 2 LINES BELOW AS REQUIRED
+		$email_to = "karycabrera33@gmail.com";
+		$email_subject = "New Order";
+
+		function problem($error)
+		{
+			echo "We are very sorry, but there were error(s) found with the form you submitted. ";
+			echo "These errors appear below.<br><br>";
+			echo $error . "<br><br>";
+			echo "Please go back and fix these errors.<br><br>";
+			die();
+		}
+
+		// validation expected data exists
+		if (
+			!isset($_POST['Name']) ||
+			!isset($_POST['Email']) ||
+		) {
+			problem('We are sorry, but there appears to be a problem with the form you submitted.');
+		}
+
+		$name = $_POST['Name']; // required
+		$email = $_POST['Email']; // required
+
+		$error_message = "";
+		$email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
+
+		if (!preg_match($email_exp, $email)) {
+			$error_message .= 'The Email address you entered does not appear to be valid.<br>';
+		}
+
+		$string_exp = "/^[A-Za-z .'-]+$/";
+
+		if (!preg_match($string_exp, $name)) {
+			$error_message .= 'The Name you entered does not appear to be valid.<br>';
+		}
+
+		if (strlen($message) < 2) {
+			$error_message .= 'The Message you entered do not appear to be valid.<br>';
+		}
+
+		if (strlen($error_message) > 0) {
+			problem($error_message);
+		}
+
+		$email_message = "Form details below.\n\n";
+
+		function clean_string($string)
+		{
+			$bad = array("content-type", "bcc:", "to:", "cc:", "href");
+			return str_replace($bad, "", $string);
+		}
+
+		$email_message .= "Name: " . clean_string($name) . "\n";
+		$email_message .= "Email: " . clean_string($email) . "\n";
+		$email_message .= "Message: " . clean_string($message) . "\n";
+
+		// create email headers
+		$headers = 'From: ' . $email . "\r\n" .
+			'Reply-To: ' . $email . "\r\n" .
+			'X-Mailer: PHP/' . phpversion();
+		@mail($email_to, $email_subject, $email_message, $headers);
+	?>
+
+		<!-- include your success message below -->
+
+		Thank you for contacting us. We will be in touch with you very soon.
+
+	<?php
+	}
+	?>
+	</script>
+</body>
+</html>
+
